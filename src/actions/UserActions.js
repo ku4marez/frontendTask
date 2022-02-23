@@ -1,67 +1,85 @@
 import {
-    GET_USERS,
-    POST_USER,
-    UPDATE_USER,
-    DELETE_USER
+    ACTION_TYPES_OBJ
 } from "./ActionTypes";
 import {axiosInstance} from "../interceptors/Interceptor";
+import {OK_STATUS_CODE} from "../constants/Constants";
 
-export function getUsers() {
-    return async (dispatch) => {
-        await axiosInstance.get("/users/").then((response) => {
-            if (response.status === 200) {
+export const getUsers = () => dispatch => {
+    axiosInstance.get("/users/").then((response) => {
+        if (response.status === OK_STATUS_CODE) {
+            dispatch(
+                {
+                    type: ACTION_TYPES_OBJ.GET_USERS,
+                    payload: response.data,
+                },
+            );
+        }
+    });
+};
+
+
+export const postUser = (newUser) => async (dispatch) => {
+    axiosInstance
+        .post("/users/", JSON.stringify(newUser))
+        .then((response) => {
+            if (response.status === OK_STATUS_CODE) {
+                // eslint-disable-next-line no-restricted-globals
+                history.push("/users");
+                dispatch({
+                    type: ACTION_TYPES_OBJ.POST_USER,
+                    payload: response.data,
+                });
+            }
+        })
+        .catch((error) => {
+            dispatch({
+                type: ACTION_TYPES_OBJ.POST_USER,
+                payload: {
+                    error: error.response.data.message,
+                },
+            });
+        });
+};
+
+export const updateUser = (userId, updatedUser) => dispatch => {
+    axiosInstance.put("/users/?id=" + userId, JSON.stringify(updatedUser))
+        .then((response) => {
+            if (response.status === OK_STATUS_CODE) {
                 dispatch(
                     {
-                        type: GET_USERS,
+                        type: ACTION_TYPES_OBJ.UPDATE_USER,
                         payload: response.data,
                     },
                 );
             }
+        })
+        .catch((error) => {
+            dispatch({
+                type: ACTION_TYPES_OBJ.UPDATE_USER,
+                payload: {
+                    error: error.response.data.message,
+                },
+            });
         });
-    };
-}
+};
 
-export function postUser() {
-    return async (dispatch) => {
-        await axiosInstance.post("/users/").then((response) => {
-            if (response.status === 200) {
-                dispatch(
-                    {
-                        type: POST_USER,
-                        payload: response.data,
-                    },
-                );
-            }
+export const deleteUser = (userId) => async dispatch => {
+    axiosInstance.delete("/users/?id=" + userId).then((response) => {
+        if (response.status === OK_STATUS_CODE) {
+            dispatch(
+                {
+                    type: ACTION_TYPES_OBJ.DELETE_USER,
+                    payload: response.data,
+                },
+            );
+        }
+    })
+        .catch((error) => {
+            dispatch({
+                type: ACTION_TYPES_OBJ.DELETE_USER,
+                payload: {
+                    error: error.response.data.message,
+                },
+            });
         });
-    };
-}
-
-export function updateUser() {
-    return async (dispatch) => {
-        await axiosInstance.put("/users/").then((response) => {
-            if (response.status === 200) {
-                dispatch(
-                    {
-                        type: UPDATE_USER,
-                        payload: response.data,
-                    },
-                );
-            }
-        });
-    };
-}
-
-export function deleteUser(id) {
-    return async (dispatch) => {
-        await axiosInstance.delete("/users/" + id).then((response) => {
-            if (response.status === 200) {
-                dispatch(
-                    {
-                        type: DELETE_USER,
-                        payload: response.data,
-                    },
-                );
-            }
-        });
-    };
-}
+};

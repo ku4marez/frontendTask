@@ -1,4 +1,4 @@
-export const GET_USERS = "GET_USERS";
-export const POST_USER = "POST_USER";
-export const UPDATE_USER = "UPDATE_USER";
-export const DELETE_USER = "DELETE_USER";
+export const ACTION_TYPES_OBJ = {
+    GET_USERS: "GET_USERS", POST_USER: "POST_USER",
+    UPDATE_USER: "UPDATE_USER", DELETE_USER: "DELETE_USER"
+};

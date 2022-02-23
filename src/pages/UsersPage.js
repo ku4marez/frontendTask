@@ -26,10 +26,11 @@ const UsersPage = () => {
                         <ul>
                             {users.map((user) => (
                                 <li key={user.id}>
-                                    <a>{user.firstName + " " + user.lastName + " " + user.age}</a>
+                                    <a>{user.id + " " + user.firstName + " " + user.lastName + " " + user.age}</a>
                                 </li>
                             ))}
                         </ul>
+
                     </div>
                 </div>
             </main>

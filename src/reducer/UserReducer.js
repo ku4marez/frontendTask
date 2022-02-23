@@ -1,38 +1,37 @@
 import {
-  DELETE_USER,
-  GET_USERS, POST_USER, UPDATE_USER,
+    ACTION_TYPES_OBJ,
 } from "../actions/ActionTypes";
 
 const initialState = {
-  users: [],
-  user: {},
+    users: [],
+    user: {},
 };
 
 const userReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_USERS:
-      return {
-        ...state,
-        users: action.payload,
-      };
-    case POST_USER:
-      return {
-        ...state,
-        user: action.payload,
-      };
-    case UPDATE_USER:
-      return {
-        ...state,
-        user: action.payload,
-      };
-    case DELETE_USER:
-      return {
-        ...state,
-        user: action.payload,
-      };
-    default:
-      return state;
-  }
+    switch (action.type) {
+        case ACTION_TYPES_OBJ.GET_USERS:
+            return {
+                ...state,
+                users: action.payload,
+            };
+        case ACTION_TYPES_OBJ.POST_USER:
+            return {
+                ...state,
+                registrationErrorMessage: action.payload.error,
+            };
+        case ACTION_TYPES_OBJ.UPDATE_USER:
+            return {
+                ...state,
+                user: action.payload,
+            };
+        case ACTION_TYPES_OBJ.DELETE_USER:
+            return {
+                ...state,
+                user: action.payload,
+            };
+        default:
+            return state;
+    }
 };
 
 export default userReducer;
