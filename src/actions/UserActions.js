@@ -17,8 +17,7 @@ export const getUsers = () => dispatch => {
     });
 };
 
-
-export const postUser = (newUser) => async (dispatch) => {
+export const postUser = (newUser) => (dispatch) => {
     axiosInstance
         .post("/users/", JSON.stringify(newUser))
         .then((response) => {
@@ -63,7 +62,7 @@ export const updateUser = (userId, updatedUser) => dispatch => {
         });
 };
 
-export const deleteUser = (userId) => async dispatch => {
+export const deleteUser = (userId) => dispatch => {
     axiosInstance.delete("/users/?id=" + userId).then((response) => {
         if (response.status === OK_STATUS_CODE) {
             dispatch(

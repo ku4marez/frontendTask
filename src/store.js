@@ -1,6 +1,6 @@
 import thunk from "redux-thunk";
 import {createStore, compose, applyMiddleware} from "redux";
-import combineReducers from "./reducer/index";
+import combineReducers from "./reducers/index";
 
 const initialState = {};
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

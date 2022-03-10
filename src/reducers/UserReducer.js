@@ -17,7 +17,7 @@ const userReducer = (state = initialState, action) => {
         case ACTION_TYPES_OBJ.POST_USER:
             return {
                 ...state,
-                registrationErrorMessage: action.payload.error,
+                user: action.payload,
             };
         case ACTION_TYPES_OBJ.UPDATE_USER:
             return {
