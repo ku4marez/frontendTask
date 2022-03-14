@@ -16,12 +16,12 @@ import {List} from "@material-ui/core";
 export default function UserPage() {
     const dispatch = useDispatch();
 
+    const [dense] = React.useState(false);
+    const users = useSelector((store) => store.userReducer.users);
+
     useEffect(() => {
         dispatch(getUsers());
     }, [dispatch]);
-
-    const [dense] = React.useState(false);
-    const users = useSelector((store) => store.userReducer.users);
 
     const listItems = user => {
         return <div key={user.id}>{`User ID = ${user.id}, First Name = ${user.firstName},

@@ -3,36 +3,33 @@ import {
 } from "./ActionTypes";
 import {axiosInstance} from "../interceptors/Interceptor";
 import {OK_STATUS_CODE} from "../constants/Constants";
+import {
+    createUserActionCreator,
+    deleteUserActionCreator,
+    getUsersActionCreator,
+    updateUserActionCreator
+} from "./ActionCreators";
 
 export const getUsers = () => dispatch => {
     axiosInstance.get("/users/").then((response) => {
         if (response.status === OK_STATUS_CODE) {
-            dispatch(
-                {
-                    type: ACTION_TYPES_OBJ.GET_USERS,
-                    payload: response.data,
-                },
-            );
+            dispatch(getUsersActionCreator(response));
         }
     });
 };
 
-export const postUser = (newUser) => (dispatch) => {
+export const createUser = newUser => (dispatch) => {
     axiosInstance
         .post("/users/", JSON.stringify(newUser))
         .then((response) => {
             if (response.status === OK_STATUS_CODE) {
-                // eslint-disable-next-line no-restricted-globals
-                history.push("/users");
-                dispatch({
-                    type: ACTION_TYPES_OBJ.POST_USER,
-                    payload: response.data,
-                });
+                window.history.push("/users");
+                dispatch(createUserActionCreator(response));
             }
         })
         .catch((error) => {
             dispatch({
-                type: ACTION_TYPES_OBJ.POST_USER,
+                type: ACTION_TYPES_OBJ.POST_USER_FAILURE,
                 payload: {
                     error: error.response.data.message,
                 },
@@ -44,17 +41,12 @@ export const updateUser = (userId, updatedUser) => dispatch => {
     axiosInstance.put("/users/?id=" + userId, JSON.stringify(updatedUser))
         .then((response) => {
             if (response.status === OK_STATUS_CODE) {
-                dispatch(
-                    {
-                        type: ACTION_TYPES_OBJ.UPDATE_USER,
-                        payload: response.data,
-                    },
-                );
+                dispatch(updateUserActionCreator(response));
             }
         })
         .catch((error) => {
             dispatch({
-                type: ACTION_TYPES_OBJ.UPDATE_USER,
+                type: ACTION_TYPES_OBJ.UPDATE_USER_FAILURE,
                 payload: {
                     error: error.response.data.message,
                 },
@@ -62,20 +54,15 @@ export const updateUser = (userId, updatedUser) => dispatch => {
         });
 };
 
-export const deleteUser = (userId) => dispatch => {
+export const deleteUser = userId => dispatch => {
     axiosInstance.delete("/users/?id=" + userId).then((response) => {
         if (response.status === OK_STATUS_CODE) {
-            dispatch(
-                {
-                    type: ACTION_TYPES_OBJ.DELETE_USER,
-                    payload: response.data,
-                },
-            );
+            dispatch(deleteUserActionCreator(response));
         }
     })
         .catch((error) => {
             dispatch({
-                type: ACTION_TYPES_OBJ.DELETE_USER,
+                type: ACTION_TYPES_OBJ.DELETE_USER_FAILURE,
                 payload: {
                     error: error.response.data.message,
                 },
