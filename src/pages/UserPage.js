@@ -23,9 +23,13 @@ export default function UserPage() {
         dispatch(getUsers());
     }, [dispatch]);
 
-    const listItems = user => {
-        return <div key={user.id}>{`User ID = ${user.id}, First Name = ${user.firstName},
-                            Last Name = ${user.lastName}, Age = ${user.age}`}</div>;
+    const displayListItems = user => {
+        return <React.Fragment key={user.id}>
+            {`User ID = ${user.id}, 
+            First Name = ${user.firstName},
+            Last Name = ${user.lastName}, 
+            Age = ${user.age}`}
+        </React.Fragment>;
     };
 
     return (
@@ -38,7 +42,7 @@ export default function UserPage() {
                             <Card variant="outlined">
                                 {users.map(user => (
                                     <ListItem key={user.id}>
-                                        <ListItemText primary={listItems(user)}/>
+                                        <ListItemText primary={displayListItems(user)}/>
                                         <ListItemSecondaryAction>
                                             <IconButton
                                                 edge="end"
@@ -76,4 +80,3 @@ export default function UserPage() {
         </div>
     );
 };
-

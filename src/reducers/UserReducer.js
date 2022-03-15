@@ -5,29 +5,25 @@ import {
 const initialState = {
     users: [],
     user: {},
+    failureErrorMessage: "",
 };
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ACTION_TYPES_OBJ.GET_USERS:
+        case ACTION_TYPES_OBJ.USERS_RESPONSE_SUCCESS:
             return {
                 ...state,
                 users: action.payload,
             };
-        case ACTION_TYPES_OBJ.POST_USER:
+        case ACTION_TYPES_OBJ.USER_RESPONSE_SUCCESS:
             return {
                 ...state,
                 user: action.payload,
             };
-        case ACTION_TYPES_OBJ.UPDATE_USER:
+        case ACTION_TYPES_OBJ.RESPONSE_FAILURE:
             return {
                 ...state,
-                user: action.payload,
-            };
-        case ACTION_TYPES_OBJ.DELETE_USER:
-            return {
-                ...state,
-                user: action.payload,
+                failureErrorMessage: action.payload.error,
             };
         default:
             return state;

@@ -1,29 +1,24 @@
 import {ACTION_TYPES_OBJ} from "./ActionTypes";
 
-export function getUsersActionCreator(response) {
+export const successUsersActionCreator = (response) => {
     return {
-        type: ACTION_TYPES_OBJ.GET_USERS,
+        type: ACTION_TYPES_OBJ.USERS_RESPONSE_SUCCESS,
         payload: response.data,
     }
 }
 
-export function createUserActionCreator(response) {
+export const successUserActionCreator = (response) => {
     return {
-        type: ACTION_TYPES_OBJ.POST_USER,
+        type: ACTION_TYPES_OBJ.USER_RESPONSE_SUCCESS,
         payload: response.data,
     }
 }
 
-export function deleteUserActionCreator(response) {
+export const failureUsersActionCreator = (error) => {
     return {
-        type: ACTION_TYPES_OBJ.DELETE_USER,
-        payload: response.data,
-    }
-}
-
-export function updateUserActionCreator(response) {
-    return {
-        type: ACTION_TYPES_OBJ.UPDATE_USER,
-        payload: response.data,
+        type: ACTION_TYPES_OBJ.RESPONSE_FAILURE,
+        payload: {
+            error: error.response.data.message,
+        }
     }
 }

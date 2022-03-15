@@ -1,19 +1,15 @@
-import {
-    ACTION_TYPES_OBJ
-} from "./ActionTypes";
 import {axiosInstance} from "../interceptors/Interceptor";
 import {OK_STATUS_CODE} from "../constants/Constants";
 import {
-    createUserActionCreator,
-    deleteUserActionCreator,
-    getUsersActionCreator,
-    updateUserActionCreator
+    failureUsersActionCreator,
+    successUserActionCreator,
+    successUsersActionCreator
 } from "./ActionCreators";
 
 export const getUsers = () => dispatch => {
     axiosInstance.get("/users/").then((response) => {
         if (response.status === OK_STATUS_CODE) {
-            dispatch(getUsersActionCreator(response));
+            dispatch(successUsersActionCreator(response));
         }
     });
 };
@@ -24,16 +20,11 @@ export const createUser = newUser => (dispatch) => {
         .then((response) => {
             if (response.status === OK_STATUS_CODE) {
                 window.history.push("/users");
-                dispatch(createUserActionCreator(response));
+                dispatch(successUserActionCreator(response));
             }
         })
         .catch((error) => {
-            dispatch({
-                type: ACTION_TYPES_OBJ.POST_USER_FAILURE,
-                payload: {
-                    error: error.response.data.message,
-                },
-            });
+            dispatch(failureUsersActionCreator(error));
         });
 };
 
@@ -41,31 +32,21 @@ export const updateUser = (userId, updatedUser) => dispatch => {
     axiosInstance.put("/users/?id=" + userId, JSON.stringify(updatedUser))
         .then((response) => {
             if (response.status === OK_STATUS_CODE) {
-                dispatch(updateUserActionCreator(response));
+                dispatch(successUserActionCreator(response));
             }
         })
         .catch((error) => {
-            dispatch({
-                type: ACTION_TYPES_OBJ.UPDATE_USER_FAILURE,
-                payload: {
-                    error: error.response.data.message,
-                },
-            });
+            dispatch(failureUsersActionCreator(error));
         });
 };
 
 export const deleteUser = userId => dispatch => {
     axiosInstance.delete("/users/?id=" + userId).then((response) => {
         if (response.status === OK_STATUS_CODE) {
-            dispatch(deleteUserActionCreator(response));
+            dispatch(successUserActionCreator(response));
         }
     })
         .catch((error) => {
-            dispatch({
-                type: ACTION_TYPES_OBJ.DELETE_USER_FAILURE,
-                payload: {
-                    error: error.response.data.message,
-                },
-            });
+            dispatch(failureUsersActionCreator(error));
         });
 };

@@ -2,7 +2,7 @@ import React from "react";
 import {
     Routes,
     Route,
-} from 'react-router-dom';
+} from "react-router-dom";
 import UserPage from "./pages/UserPage";
 import {Provider} from "react-redux";
 import store from "./store";
