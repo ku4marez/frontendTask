@@ -2,13 +2,11 @@ import React, {useEffect} from "react";
 
 import {useDispatch, useSelector} from "react-redux";
 import {getUsers} from "../actions/UserActions";
-import {green, red} from "@material-ui/core/colors";
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Typography from "@material-ui/core/Typography";
 import {List} from "@material-ui/core";
@@ -44,39 +42,35 @@ export default function UserPage() {
                                     <ListItem key={user.id}>
                                         <ListItemText primary={displayListItems(user)}/>
                                         <ListItemSecondaryAction>
-                                            <IconButton
-                                                edge="end"
-                                                aria-label="edit"
-                                                style={{color: green[800], paddingRight: "10px"}}
-                                                size="small"
-                                            >
+                                            <CrudButton style={{color: "green"}} >
                                                 Edit
-                                            </IconButton>
-                                            <IconButton
-                                                edge="end"
-                                                aria-label="delete"
-                                                style={{color: red[800], paddingLeft: "10px"}}
-                                                size="small"
-                                            >
+                                            </CrudButton>
+                                            <CrudButton style={{color: "red"}}>
                                                 Delete
-                                            </IconButton>
+                                            </CrudButton>
                                         </ListItemSecondaryAction>
                                     </ListItem>
                                 ))}
                             </Card>
                         </List>
                     </div>
-                    <Button
-                        variant="text"
-                        color="inherit"
+                    <CrudButton
                         style={{background: "#d50000", width: "100%", color: "white"}}
                         size="large"
                     >
                         Add user
-                    </Button>
+                    </CrudButton>
                 </Grid>
             </Grid>
             <br/>
         </div>
     );
 };
+
+function CrudButton(props) {
+    return (
+        <Button style={props.style}>
+            {props.children}
+        </Button>
+    );
+}
